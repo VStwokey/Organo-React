@@ -4,7 +4,7 @@ import CampoTexto from '../CampoTexto';
 import ListaSuspensa from '../ListaSuspensa';
 import './Formulario.css'
 
-function Formulario() {
+function Formulario(props) {
     const times = [
         'CS',
         'Valorant',
@@ -19,11 +19,18 @@ function Formulario() {
     const [nome, setNome] = useState('');
     const [cargo, setCargo] = useState('');
     const [imagem, setImagem] = useState('');
+    const [time, setTime] = useState('');
+
 
 
     const aoSalvar = (evento) => {
         evento.preventDefault()
-        console.log('Card cadastrado com sucesso!', nome, cargo, imagem)
+        props.aoCompanheiroCadastrado({
+            nome,
+            cargo,
+            imagem,
+            time
+        })
     }
 
     return (
@@ -33,7 +40,7 @@ function Formulario() {
                 <CampoTexto required={true} label="Nome" placeholder="Digite seu nome" valor={nome} aoAlterado={valor => setNome(valor)} />
                 <CampoTexto required={true} label="Cargo" placeholder="Digite seu cargo" valor={cargo} aoAlterado={valor=>setCargo(valor)} />
                 <CampoTexto label="Imagem" placeholder="Digite o endereço da imagem" valor={imagem} aoAlterado={valor=>setImagem(valor)} />
-                <ListaSuspensa label="Times" itens={times} />
+                <ListaSuspensa label="Times" itens={times} valor={time} aoAlterado={valor => setTime(valor)} />
                 <Botao texto="Criar Card"/>
             </form>
         </section>
