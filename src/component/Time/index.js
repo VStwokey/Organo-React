@@ -15,7 +15,7 @@ const Time = (props) => {
                             corDeFundo={props.corPrimaria}
                             key={companheiro.nome}
                             nome={companheiro.nome}
-                            cargo={companheiro.cargo}
+                            funcao={companheiro.funcao}
                             imagem={companheiro.imagem}
                         />)}
                 </div>
