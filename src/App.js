@@ -2,10 +2,14 @@ import { useState } from 'react';
 import Banner from './component/Banner';
 import Formulario from './component/Formulário';
 import Time from './component/Time';
+import Rodape from './component/Rodape';
 
 function App() {
 
   const times = [
+    {
+      nome: 'Escolha Seu Time',
+    },
     {
       nome: 'CS',
       corPrimaria: '#000000',
@@ -29,26 +33,32 @@ function App() {
     {
       nome: 'NBA',
       corPrimaria: '#ff0000',
-      corSecundaria: '#8913ff'
+      corSecundaria: '#1135ff'
     },
   ]
 
   const [companheiros, setCompanheiros] = useState([])
 
   const aoNovoCompanheiroAdicionado = (companheiro) => {
-    console.log(companheiro)
     setCompanheiros([...companheiros, companheiro])
   }
 
   return (
     <div className="App">
-      <Banner/>
-      <Formulario times={times.map(time => time.nome)} aoCompanheiroCadastrado = {companheiro => aoNovoCompanheiroAdicionado(companheiro)} />
+      <Banner />
+      <Formulario times={times.map(time => time.nome)}
+        aoCompanheiroCadastrado={companheiro => aoNovoCompanheiroAdicionado(companheiro)} />
 
-      {times.map(time => <Time key={time.nome} nome = {time.nome} corPrimaria={time.corPrimaria} corSecundaria={time.corSecundaria} /> )} 
-      
+      {times.map(time => <Time
+        key={time.nome}
+        nome={time.nome}
+        corPrimaria={time.corPrimaria}
+        corSecundaria={time.corSecundaria}
+        companheiros={companheiros.filter(companheiro => companheiro.time === time.nome)}
+      />)}
 
-      {/* <Time nome = "CS"/> */}
+      <Rodape />
+
     </div>
   );
 }

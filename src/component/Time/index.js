@@ -1,13 +1,26 @@
+import Companheiro from '../Companheiro';
 import './Time.css'
 
 const Time = (props) => {
     const css = { backgroundColor: props.corSecundaria }
 
-
     return (
-        <section className='time' style={css} >
-            <h3 style={{borderColor: props.corPrimaria}}> {props.nome} </h3>
-        </section>
+        (props.companheiros.length > 0)
+            ?
+            <section className='time' style={css} >
+                <h3 style={{ borderColor: props.corPrimaria }}> {props.nome} </h3>
+                <div className='companheiros'>
+                    {props.companheiros.map(companheiro =>
+                        <Companheiro
+                            corDeFundo={props.corPrimaria}
+                            key={companheiro.nome}
+                            nome={companheiro.nome}
+                            cargo={companheiro.cargo}
+                            imagem={companheiro.imagem}
+                        />)}
+                </div>
+            </section>
+            : ''
     )
 }
 
