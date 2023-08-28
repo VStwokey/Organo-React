@@ -43,18 +43,24 @@ function App() {
     setCompanheiros([...companheiros, companheiro])
   }
 
+  function deletarCompanheiro() {
+    console.log('Deletar')
+  }
+
   return (
     <div className="App">
       <Banner />
       <Formulario times={times.map(time => time.nome)}
         aoCompanheiroCadastrado={companheiro => aoNovoCompanheiroAdicionado(companheiro)} />
 
-      {times.map(time => <Time
+      {times.map(time => 
+        <Time
         key={time.nome}
         nome={time.nome}
         corPrimaria={time.corPrimaria}
         corSecundaria={time.corSecundaria}
         companheiros={companheiros.filter(companheiro => companheiro.time === time.nome)}
+        aoDeletar={deletarCompanheiro}
       />)}
 
       <Rodape />
