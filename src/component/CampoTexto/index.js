@@ -1,17 +1,23 @@
-import './CampoTexto.css'
+import './Campo.css'
 
-function CampoTexto(props) {
+function Campo(props) {
 
     const aoDigitado = (evento) => {
         props.aoAlterado(evento.target.value)
     }
 
-    return(
-        <div className="campo__texto">
+    return (
+        <div className={`campo campo-${props.type}`}>
             <label>{props.label}</label>
-            <input value={props.valor} onChange={aoDigitado} required={props.required} placeholder={props.placeholder} />
+            <input
+                type={props.type}
+                value={props.valor}
+                onChange={aoDigitado}
+                required={props.required}
+                placeholder={props.placeholder}
+            />
         </div>
     )
 }
 
-export default CampoTexto;
+export default Campo;
