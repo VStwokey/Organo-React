@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import Banner from './component/Banner';
 import Formulario from './component/Formulário';
 import Time from './component/Time';
@@ -11,36 +12,36 @@ function App() {
       nome: 'Escolha Seu Time',
     },
     {
+      id: uuidv4(),
       nome: 'CS',
-      corPrimaria: '#000000',
-      corSecundaria: '#ffc400'
+      cor: '#ffc400'
     },
     {
+      id: uuidv4(),
       nome: 'Valorant',
-      corPrimaria: '#000000',
-      corSecundaria: '#f46058'
+      cor: '#f46058'
     },
     {
+      id: uuidv4(),
       nome: 'League of Legends',
-      corPrimaria: '#ffd700',
-      corSecundaria: '#3250fe'
+      cor: '#3250fe'
     },
     {
+      id: uuidv4(),
       nome: 'Rocket League',
-      corPrimaria: '#ffffff',
-      corSecundaria: '#2948fb'
+      cor: '#2948fb'
     },
     {
+      id: uuidv4(),
       nome: 'NBA',
-      corPrimaria: '#ff0000',
-      corSecundaria: '#1135ff'
+      cor: '#1135ff'
     }
   ])
 
-  function mudarCorDoTime(cor, nome) {
+  function mudarCorDoTime(cor, id) {
     setTimes(times.map(time => {
-      if(time.nome === nome ) {
-        time.corPrimaria = cor;
+      if (time.id === id) {
+        time.cor = cor;
       }
       return time;
     }));
@@ -52,23 +53,30 @@ function App() {
     setCompanheiros([...companheiros, companheiro])
   }
 
-  function deletarCompanheiro() {
-    console.log('Deletar')
+  function deletarCompanheiro(id) {
+    setCompanheiros(companheiros.filter(companheiro => companheiro.id !== id))
+  }
+
+  function cadastrarTime(novoTime) {
+    setTimes([...times, {...novoTime, id: uuidv4() } ])
+
   }
 
   return (
     <div className="App">
       <Banner />
-      <Formulario times={times.map(time => time.nome)}
+      <Formulario
+        cadastrarTime={cadastrarTime}
+        times={times.map(time => time.nome)}
         aoCompanheiroCadastrado={companheiro => aoNovoCompanheiroAdicionado(companheiro)} />
 
       {times.map(time =>
         <Time
           mudarCor={mudarCorDoTime}
           key={time.nome}
+          id={time.id}
           nome={time.nome}
-          corPrimaria={time.corPrimaria}
-          corSecundaria={time.corSecundaria}
+          cor={time.cor}
           companheiros={companheiros.filter(companheiro => companheiro.time === time.nome)}
           aoDeletar={deletarCompanheiro}
         />)}
