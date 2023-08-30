@@ -6,7 +6,7 @@ import Rodape from './component/Rodape';
 
 function App() {
 
-  const times = [
+  const [times, setTimes] = useState([
     {
       nome: 'Escolha Seu Time',
     },
@@ -34,8 +34,17 @@ function App() {
       nome: 'NBA',
       corPrimaria: '#ff0000',
       corSecundaria: '#1135ff'
-    },
-  ]
+    }
+  ])
+
+  function mudarCorDoTime(cor, nome) {
+    setTimes(times.map(time => {
+      if(time.nome === nome ) {
+        time.corPrimaria = cor;
+      }
+      return time;
+    }));
+  }
 
   const [companheiros, setCompanheiros] = useState([])
 
@@ -53,15 +62,16 @@ function App() {
       <Formulario times={times.map(time => time.nome)}
         aoCompanheiroCadastrado={companheiro => aoNovoCompanheiroAdicionado(companheiro)} />
 
-      {times.map(time => 
+      {times.map(time =>
         <Time
-        key={time.nome}
-        nome={time.nome}
-        corPrimaria={time.corPrimaria}
-        corSecundaria={time.corSecundaria}
-        companheiros={companheiros.filter(companheiro => companheiro.time === time.nome)}
-        aoDeletar={deletarCompanheiro}
-      />)}
+          mudarCor={mudarCorDoTime}
+          key={time.nome}
+          nome={time.nome}
+          corPrimaria={time.corPrimaria}
+          corSecundaria={time.corSecundaria}
+          companheiros={companheiros.filter(companheiro => companheiro.time === time.nome)}
+          aoDeletar={deletarCompanheiro}
+        />)}
 
       <Rodape />
 
